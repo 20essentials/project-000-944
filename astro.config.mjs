@@ -4,7 +4,6 @@ import icon from 'astro-icon';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://20essentials.github.io/project-000-936/',
   prefetch: {
     defaultStrategy: 'viewport'
   },
