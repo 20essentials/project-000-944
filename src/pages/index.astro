@@ -1,0 +1,69 @@
+---
+import Layout from '@layouts/Layout.astro';
+import AboutUs from '@sections/AboutUs.astro';
+import Hero from '@sections/Hero/Hero.astro';
+import Mission from '@sections/Mission.astro';
+import Projects from '@sections/Projects.astro';
+import Volunteer from '@sections/Volunteer.astro';
+import Team from '@sections/Team.astro';
+---
+
+<Layout
+  title="UX Corp Rangel"
+  description="Este espacio ha sido diseñado y construido por miembros de la comunidad para mostrar todas las cosas bonitas que hemos logrado en equipo."
+>
+  <main>
+    <Hero />
+
+    <AboutUs />
+
+    <Mission />
+
+    <Projects />
+
+    <Team />
+
+    <Volunteer />
+  </main>
+</Layout>
+
+<style>
+  main {
+    width: 100%;
+
+    section {
+      min-height: 100vh;
+
+      gap: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:nth-child(3) {
+        background-color: var(--saffron-color);
+      }
+
+      &:nth-child(4) {
+        background-color: var(--mauve-color);
+      }
+
+      &:nth-child(5) {
+        background-color: var(--alt-text-color);
+      }
+
+      &:nth-child(6) {
+        background-color: var(--cinnabar-color);
+      }
+    }
+  }
+</style>
+
+<script>
+  const isHoverDevice = window.matchMedia('(any-hover: hover)').matches;
+
+  if (isHoverDevice) {
+    import('@scripts/harley-oneko').then(HarleyOneko => {
+      new HarleyOneko.default('/assets/images/harley-oneko.png');
+    });
+  }
+</script>

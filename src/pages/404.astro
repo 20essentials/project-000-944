@@ -1,0 +1,136 @@
+---
+import Layout from '@layouts/Base.astro';
+import UXCorpRangel from '@sections/Hero/UXCorpRangel.astro';
+import Harley from '@sections/Hero/Harley.astro';
+import LinkButton from '@components/LinkButton.astro';
+---
+
+<Layout title="UX Corp Rangel - 404" description="Página no encontrada.">
+  <main>
+    <section class="section-404">
+      <div class="logo-wrapper">
+        <span>4</span>
+
+        <div class="harley" role="button">
+          <Harley />
+
+          <div class="corp">
+            <UXCorpRangel width="width" height="height" />
+          </div>
+        </div>
+
+        <span>4</span>
+      </div>
+
+      <p id="quote"></p>
+
+      <LinkButton link="/" label="Inicio" icon="home" shadow="green" bgColor="var(--saffron-color)" textColor="var(--alt-text-color)" />
+    </section>
+  </main>
+</Layout>
+
+<style>
+  main {
+    height: 100vh;
+    width: min(80rem, 100vw);
+
+    display: grid;
+    place-items: center;
+  }
+
+  .section-404 {
+    gap: 1rem;
+    display: flex;
+
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    padding-block-end: 1.5rem;
+
+    & #quote {
+      min-height: 2rem;
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    .logo-wrapper {
+      gap: 4rem;
+      display: flex;
+      user-select: none;
+      align-items: center;
+      justify-content: center;
+
+      & span {
+        font-size: 24rem;
+        font-family: var(--header-font-family);
+      }
+
+      & .harley {
+        display: flex;
+        position: relative;
+        align-items: center;
+        justify-content: center;
+        cursor: url(/assets/images/cursor/cursor-pointer.webp), pointer;
+
+        &:active {
+          cursor: url(/assets/images/cursor/cursor-pointer-clicked.png), pointer;
+        }
+
+        & .corp {
+          width: 150%;
+
+          z-index: -1;
+          position: absolute;
+          pointer-events: none;
+          animation: rotate-animation 60s infinite linear;
+        }
+      }
+    }
+
+    @media (width < 768px) {
+      gap: 1rem;
+      margin-inline: 2rem;
+
+      & .logo-wrapper {
+        gap: 2rem;
+
+        display: flex;
+        flex-wrap: wrap;
+
+        & .harley {
+          max-width: 30%;
+        }
+
+        & span {
+          font-size: 8.5rem;
+        }
+      }
+    }
+  }
+
+  @keyframes rotate-animation {
+    0% {
+      transform: rotate(0deg);
+    }
+    50% {
+      transform: rotate(180deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+
+<script>
+  import { getRandom404Quote } from '@data/quotes-404';
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const quoteElement = document.getElementById('quote');
+    function changeQuote() {
+      quoteElement!.textContent = getRandom404Quote();
+    }
+
+    changeQuote();
+    document.querySelector('.harley')?.addEventListener('click', changeQuote);
+  });
+</script>

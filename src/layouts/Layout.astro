@@ -1,0 +1,30 @@
+---
+import Navbar from '@components/Navbar/Navbar.astro';
+import Footer from '@components/Footer.astro';
+
+import Base from './Base.astro';
+
+interface Props {
+  /**
+   * Título de la página.
+   */
+  title: string;
+
+  /**
+   * Descripción de la página.
+   */
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<Base title={title} description={description}>
+  <Navbar />
+  <slot />
+  <Footer />
+</Base>
+
+<script>
+  import '@scripts/woof';
+</script>

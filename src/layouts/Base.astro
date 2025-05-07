@@ -1,0 +1,240 @@
+---
+import '@fontsource/titan-one';
+import '@fontsource-variable/onest';
+
+import 'sanitize.css';
+import 'sanitize.css/forms.css';
+import 'sanitize.css/assets.css';
+import 'sanitize.css/typography.css';
+
+import { Schema } from 'astro-seo-schema';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+
+const site = import.meta.env.SITE;
+const ogURL = `${site}/og.png`;
+
+const CURSOR_AUTO =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAABRUExURUdwTAAAAAAAAFhYWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGRkZAAAAENDQyoqKm1tbQAAAAAAAAAAAP///9/f33BwcPz8/ISEhJiYmNvb277qo8AAAAATdFJOUwDuKf0U0+GQDMU3HfyI+/79obAIDL66AAAAoElEQVQ4y5XTzQKCIBAEYCRT+1Gr3TR9/wcNiAw3d6g5cJnvxqwxLjXdGoNCRIcmA7CgnKCccG3nRQnAvHPPvtTBfUTCAx7PugiA2YvqBIAu3oAvilgAD15YABSRAH5siRQEUVgAtsQavMQRAJ6kkOBLLGAaYvq1iCB8aJJCANlTJb47DKL+pLV/DWbuMpPrUR9nr/e/HU7u9PDxtnRV+yd7ERxSGWD4qwAAAABJRU5ErkJggg==';
+
+const CURSOR_POINTER =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAACEUExURUdwTAAAAAAAAD8/Py4uLgAAAAAAAE1NTQMDAwAAAAAAAAAAAAoKCgAAAAAAAAAAAAAAAAAAAAAAABAQEAAAAAAAAAAAAAAAAAAAAP////Ly8mBgYL+/v/v7+319fWtra+rq6rm5uZ+fn66urpqams/Pz46OjltbW9DQ0NLS0iUlJc7OzikkeNEAAAAYdFJOUwCP5v79sUH+9V9S0v2+IROgBGv7CTZ9dzC9TnkAAAEoSURBVDjLjZOHcoMwEERNC80UA7b3lNAMLkn+//9ywjYWCpDsDMOgfUh30mqzGRWE8NJks6gMUmGx5BcesGUiWwL2wFd5AdIl4A2wqAWcFcClj38AprFfB1jGXwAcI9DtJHMewOV6Z3bTHk05KAGbvmdm2Q3+AzjzLPXwHRXK+nlvM9AOwJYaTKv1gSv1DHQM3BgQQF1xywrwTicGGrsiYdUSaIhPRgMseooBQd4KQK5L64CUDrT8rALUlItAINv8JbyAISy6GmUfEo5jqQMd7/V4GCHQ6YALHEbgANjaFDcuIX7FgSuuJr6wp/GUt6ZXfV7Ai9XIcKBQi6f/yf/Dn16siIfy6syViNaVYTjqVy+9hyTPh5fnz+Q6xKg0no++EXI7ZnRU7B+vBTQDJqFadAAAAABJRU5ErkJggg==';
+
+const CURSOR_POINTER_CLICKED =
+  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAABvUExURUdwTFdXVwYGBgAAAAAAAAAAAAAAAAAAAAICAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC4uLk5OTgAAAAAAAP///+/v7w4ODvr6+jw8PISEhB0dHaCgoNfX12dnZ+Dg4Lq6usDAwCEhIfbj5Z8AAAAWdFJOUwD3+IzG8dZR/CwItA2edBRrO+f4+j9x64dWAAABEklEQVQ4y5WT2ZKCMBBFWcIuio7eQBIIqP//jdPBEpMwYE0/UelTpyF9CYL/VFnutgsGsNtOPwJVft4EKqDryLEJXAA9kWITSICWk+IrUGflPgCkpy9AntbHg9/O4vwFhMowuBRO+8DmUwNo3s/PadxYlhgLMBFwHTrPQvPV+AHuXL4sCwBEvH0DTzwIkMZyXgGjFFzJloCBh0C2At6ler0PmPIB0XViF+CtK1gD3BXwqwUk/nxTP9Zn0k3f/b6g5Zysqx59YLBvsqAda09AE45OYqX7jrT1xApOQQND4Q6wBUHQ0IGcFj+tFpUbKROJfHwYi1YmM8xPXZPPGeifc1hQr7NdVFgqzf7+PWMWzaG22r/nNS2b6FpMtAAAAABJRU5ErkJggg==';
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    {description && <meta name="description" content={description} />}
+    {description && <link href={Astro.url.href} rel="canonical" />}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <link rel="preload" href={CURSOR_AUTO} as="image" type="image/png" fetchpriority="high" />
+    <link rel="preload" href={CURSOR_POINTER} as="image" type="image/png" fetchpriority="high" />
+    <link rel="preload" href={CURSOR_POINTER_CLICKED} as="image" type="image/png" fetchpriority="high" />
+
+    <style is:inline>
+      body {
+        cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAABRUExURUdwTAAAAAAAAFhYWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGRkZAAAAENDQyoqKm1tbQAAAAAAAAAAAP///9/f33BwcPz8/ISEhJiYmNvb277qo8AAAAATdFJOUwDuKf0U0+GQDMU3HfyI+/79obAIDL66AAAAoElEQVQ4y5XTzQKCIBAEYCRT+1Gr3TR9/wcNiAw3d6g5cJnvxqwxLjXdGoNCRIcmA7CgnKCccG3nRQnAvHPPvtTBfUTCAx7PugiA2YvqBIAu3oAvilgAD15YABSRAH5siRQEUVgAtsQavMQRAJ6kkOBLLGAaYvq1iCB8aJJCANlTJb47DKL+pLV/DWbuMpPrUR9nr/e/HU7u9PDxtnRV+yd7ERxSGWD4qwAAAABJRU5ErkJggg=='),
+          auto;
+      }
+
+      a,
+      a *,
+      button,
+      button * {
+        cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAACEUExURUdwTAAAAAAAAD8/Py4uLgAAAAAAAE1NTQMDAwAAAAAAAAAAAAoKCgAAAAAAAAAAAAAAAAAAAAAAABAQEAAAAAAAAAAAAAAAAAAAAP////Ly8mBgYL+/v/v7+319fWtra+rq6rm5uZ+fn66urpqams/Pz46OjltbW9DQ0NLS0iUlJc7OzikkeNEAAAAYdFJOUwCP5v79sUH+9V9S0v2+IROgBGv7CTZ9dzC9TnkAAAEoSURBVDjLjZOHcoMwEERNC80UA7b3lNAMLkn+//9ywjYWCpDsDMOgfUh30mqzGRWE8NJks6gMUmGx5BcesGUiWwL2wFd5AdIl4A2wqAWcFcClj38AprFfB1jGXwAcI9DtJHMewOV6Z3bTHk05KAGbvmdm2Q3+AzjzLPXwHRXK+nlvM9AOwJYaTKv1gSv1DHQM3BgQQF1xywrwTicGGrsiYdUSaIhPRgMseooBQd4KQK5L64CUDrT8rALUlItAINv8JbyAISy6GmUfEo5jqQMd7/V4GCHQ6YALHEbgANjaFDcuIX7FgSuuJr6wp/GUt6ZXfV7Ai9XIcKBQi6f/yf/Dn16siIfy6syViNaVYTjqVy+9hyTPh5fnz+Q6xKg0no++EXI7ZnRU7B+vBTQDJqFadAAAAABJRU5ErkJggg=='),
+          pointer;
+      }
+
+      a:active,
+      a:active *,
+      button:active,
+      button:active * {
+        cursor: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAABvUExURUdwTFdXVwYGBgAAAAAAAAAAAAAAAAAAAAICAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC4uLk5OTgAAAAAAAP///+/v7w4ODvr6+jw8PISEhB0dHaCgoNfX12dnZ+Dg4Lq6usDAwCEhIfbj5Z8AAAAWdFJOUwD3+IzG8dZR/CwItA2edBRrO+f4+j9x64dWAAABEklEQVQ4y5WT2ZKCMBBFWcIuio7eQBIIqP//jdPBEpMwYE0/UelTpyF9CYL/VFnutgsGsNtOPwJVft4EKqDryLEJXAA9kWITSICWk+IrUGflPgCkpy9AntbHg9/O4vwFhMowuBRO+8DmUwNo3s/PadxYlhgLMBFwHTrPQvPV+AHuXL4sCwBEvH0DTzwIkMZyXgGjFFzJloCBh0C2At6ler0PmPIB0XViF+CtK1gD3BXwqwUk/nxTP9Zn0k3f/b6g5Zysqx59YLBvsqAda09AE45OYqX7jrT1xApOQQND4Q6wBUHQ0IGcFj+tFpUbKROJfHwYi1YmM8xPXZPPGeifc1hQr7NdVFgqzf7+PWMWzaG22r/nNS2b6FpMtAAAAABJRU5ErkJggg=='),
+          pointer;
+      }
+    </style>
+
+    <link rel="icon" type="image/svg+xml" href="./assets/favicon.webp" />
+    <title>Landing UxCorp Practice</title>
+
+    {description && <meta name="description" content={description} />}
+    {description && <link href={Astro.url.href} rel="canonical" />}
+    {
+      description && (
+        <Schema
+          item={{
+            '@context': 'https://schema.org',
+            '@type': 'Organization',
+            name: 'Landing Practice',
+            description,
+            image: ogURL,
+            url: site
+          }}
+        />
+      )
+    }
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content={site} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content=`${title}` />
+    <meta property="og:description" content=`${description}` />
+    <meta property="og:image" content={ogURL} />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="twitter:domain" content=`${site}` />
+    <meta property="twitter:url" content=`${site}` />
+    <meta name="twitter:title" content=`${title}` />
+    <meta name="twitter:description" content=`${description}` />
+    <meta name="twitter:image" content={ogURL} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  @view-transition {
+    navigation: auto;
+  }
+
+  :root {
+    --bg-color: #010c15;
+    --text-color: #e5e9f0;
+    --alt-text-color: #04011c;
+
+    --mauve-color: #cb9cf8;
+    --portage-color: #91a8ed;
+    --saffron-color: #f7cb45;
+    --cinnabar-color: #ee2525;
+    --magic-mint-color: #a2efc4;
+    --violet-red-color: #ea4c89;
+    --persian-red-color: #d02123;
+    --burnt-sienna-color: #ed6942;
+    --fuchsia-blue-color: #855ae1;
+    --spring-green-color: #39ed81;
+    --golden-tainoi-color: #fac646;
+    --lavender-rose-color: #ff91e7;
+    --burning-orange-color: #ff6c3c;
+    --electric-violet-color: #9747ff;
+
+    --github-color: #1e1e1e;
+    --discord-color: #5865f2;
+    --linkedin-color: #0e76a8;
+    --instagram-color: #e4405f;
+
+    --header-font-family: 'Titan One', system-ui;
+    --main-font-family: 'Onest Variable', sans-serif;
+
+    color-scheme: dark;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: inherit;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    --scrollbar-size: 0.4rem;
+
+    display: flex;
+    overflow-x: hidden;
+    align-items: center;
+    flex-direction: column;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    font-family: var(--main-font-family);
+
+    &::before {
+      content: '';
+      pointer-events: none;
+      background-size: cover;
+      background-image: url('/assets/images/harley.webp');
+
+      width: 12rem;
+      z-index: 9999;
+      position: fixed;
+      aspect-ratio: 0.9;
+      inset-block-end: -20rem;
+      inset-inline-end: -15rem;
+
+      transition-duration: 0.3s;
+      transition-timing-function: ease-in-out;
+      transition-property: inset-block-end, inset-inline-end;
+    }
+
+    &.woof::before {
+      inset-block-end: -1rem;
+      inset-inline-end: -1rem;
+    }
+
+    &::-webkit-scrollbar {
+      width: var(--scrollbar-size);
+      height: var(--scrollbar-size);
+    }
+
+    &::-webkit-scrollbar-track {
+      border-radius: 0.2rem;
+      background: var(--bg-color);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 0.2rem;
+      background: var(--cinnabar-color);
+    }
+  }
+
+  @supports not selector(::-webkit-scrollbar) {
+    body {
+      scrollbar-color: var(--cinnabar-color) var(--bg-color);
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  p * {
+    cursor: text;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--header-font-family);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+</style>

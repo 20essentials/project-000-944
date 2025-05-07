@@ -1,0 +1,233 @@
+---
+import { Icon } from 'astro-icon/components';
+import { uxSocials } from '@data/socials.data';
+---
+
+<footer>
+  <div class="container">
+    <div class="logo-uxcorp" role="button">
+      <img src="/assets/images/logo.webp" alt="Logo UXCorp" width={110} height={136} loading="lazy" />
+    </div>
+
+    <div class="socials-wrapper">
+      <div class="socials">
+        <p>Síguenos</p>
+        <ul class="socials-list">
+          {
+            uxSocials.map(({ icon, label, link }) => (
+              <li>
+                <a href={link} target="_blank" rel="noopener noreferrer" aria-label={label}>
+                  <Icon name={icon} width={24} height={24} />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+    </div>
+
+    <img src="/assets/favicon.webp" alt="Logo de UX Ana Rangel" width={144} height={93} class="logo-ana" loading="lazy" />
+  </div>
+</footer>
+
+<style>
+  footer {
+    width: 100%;
+    background-color: var(--alt-text-color);
+    color: var(--text-color);
+    padding-block: 48px;
+    position: relative;
+    min-height: 277px;
+    overflow: hidden;
+    border-top: 1px solid var(--text-color);
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 120vw;
+      height: 120vh;
+      inset-block-start: -50vh;
+      inset-inline-start: -12vw;
+
+      background-image: url('/assets/images/logo.webp');
+      background-repeat: space;
+      background-size: 3%;
+      rotate: 18deg;
+      opacity: 0.1;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    & .container {
+      z-index: 1;
+      width: 100%;
+      display: flex;
+      position: relative;
+      align-items: center;
+      padding-block: 1.5rem;
+      justify-content: center;
+
+      & .logo-uxcorp {
+        position: relative;
+        filter: drop-shadow(0 0 1rem transparent);
+        cursor: url(/assets/images/cursor/cursor-pointer.webp), pointer;
+
+        transition: filter 0.3s ease-in-out;
+
+        &:active {
+          filter: drop-shadow(0 0 1rem var(--cinnabar-color));
+          cursor: url(/assets/images/cursor/cursor-pointer-clicked.png), pointer;
+        }
+
+        &::after {
+          content: 'WOOF!';
+          font-size: 1.5rem;
+          pointer-events: none;
+          font-family: var(--header-font-family);
+
+          position: absolute;
+          color: var(--text-color);
+          -webkit-text-stroke: 1px var(--alt-text-color);
+          filter: drop-shadow(3px 3px 0px var(--cinnabar-color));
+
+          opacity: 0;
+          inset-block-start: 50%;
+          inset-inline-start: 0;
+          transform: translateY(-50%) scale(0);
+
+          transition-duration: 0.3s;
+          transition-timing-function: ease-in-out;
+          transition-property: opacity, inset-block-start, inset-inline-start, transform;
+        }
+
+        &.woof::after {
+          opacity: 1;
+          inset-block-start: 3%;
+          inset-inline-start: 93%;
+          transform: rotate(-30deg) skew(-30deg) scale(1);
+        }
+      }
+
+      & .socials-wrapper {
+        gap: 1.5rem;
+        display: flex;
+        text-align: center;
+        padding-inline: 5rem;
+        flex-direction: column;
+
+        & .socials {
+          gap: 0.5rem;
+          display: flex;
+          flex-direction: column;
+          padding-block-end: 1rem;
+
+          & .socials-list {
+            gap: 0.75rem;
+            display: flex;
+            list-style: none;
+            align-items: center;
+            justify-content: center;
+
+            & a {
+              color: currentColor;
+              text-decoration: none;
+              transition: color 0.3s ease-in-out;
+
+              &:focus,
+              &:hover {
+                color: var(--spring-green-color);
+              }
+
+              &:focus-visible {
+                border-radius: 0.25rem;
+                outline: 2px dashed var(--spring-green-color);
+              }
+
+              &:active {
+                color: var(--violet-red-color);
+              }
+            }
+          }
+        }
+
+        & .made-by-wrapper {
+          gap: 0.5rem;
+          display: flex;
+          flex-direction: column;
+
+          & .made-by {
+            font-weight: 500;
+
+            & .uxcorp {
+              font-weight: 700;
+              color: var(--persian-red-color);
+            }
+          }
+
+          & .design-by {
+            color: #abb1bb;
+            font-weight: 400;
+            font-size: 0.875rem;
+            line-height: 1.25rem;
+
+            & .designer {
+              font-weight: 700;
+              text-decoration: none;
+              color: var(--violet-red-color);
+              transition: color 0.3s ease-in-out;
+
+              &:focus,
+              &:hover {
+                color: var(--spring-green-color);
+              }
+
+              &:focus-visible {
+                border-radius: 0.25rem;
+                outline: 2px dashed var(--spring-green-color);
+              }
+
+              &:active {
+                color: var(--saffron-color);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    @media (width < 768px) {
+      &::before {
+        width: 150vw;
+        height: 125vh;
+        background-size: 6%;
+      }
+
+      & .container {
+        & .socials-wrapper {
+          padding-inline: 0;
+        }
+
+        & img {
+          width: 4.875rem;
+        }
+      }
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const logoUxcorp = document.querySelector('.logo-uxcorp');
+
+    logoUxcorp?.addEventListener('click', () => {
+      const audio = new Audio('/assets/audio/woof.ogg');
+      logoUxcorp.classList.add('woof');
+      audio.addEventListener('ended', () => {
+        logoUxcorp.classList.remove('woof');
+      });
+
+      audio.play();
+    });
+  });
+</script>

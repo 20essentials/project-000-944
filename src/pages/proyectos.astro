@@ -1,0 +1,204 @@
+---
+import LinkButton from '@components/LinkButton.astro';
+import ProjectCard from '@components/ProjectCard.astro';
+import BubbleAvatar from '@components/BubbleAvatar.astro';
+import CurveIconLeft from '@sections/Projects/CurveIconLeft.astro';
+import CurveIconRight from '@sections/Projects/CurveIconRight.astro';
+import Layout from '@layouts/Layout.astro';
+import { projects } from '@data/projects';
+
+const [firstProject, ...otherProjects] = projects;
+---
+
+<Layout title="Landing Practice" description="Proyectos realizados en comunidad">
+  <main>
+    <section class="projects-wrapper">
+      <div class="line" style={{ '--height-line': `${294 * (otherProjects.length + 1)}px` }}></div>
+
+      <div class="first-project">
+        <ProjectCard className="project-principal" title={firstProject.title} desc={firstProject.description} photo={firstProject.photo}>
+          {
+            firstProject.links.map(({ label, link, icon, color, textColor, external }) => (
+              <LinkButton external={external} label={label} link={link} icon={icon} bgColor={color} textColor={textColor} />
+            ))
+          }
+        </ProjectCard>
+      </div>
+
+      <div class="projects-container">
+        {
+          otherProjects.map(({ title, description, photo, links, volunteers }, index) => {
+            const isEvenIndex = index % 2 === 0;
+
+            return (
+              <div class:list={{ right: isEvenIndex, left: !isEvenIndex }}>
+                <div class:list={{ 'curve-right': isEvenIndex, 'curve-left': !isEvenIndex }}>
+                  {isEvenIndex ? <CurveIconLeft /> : <CurveIconRight />}
+                </div>
+
+                <div class="project-volunteers">
+                  <ProjectCard className="project-secondary" title={title} desc={description} photo={photo}>
+                    {links.map(({ label, link, icon, color, textColor, external }) => (
+                      <LinkButton external={external} label={label} link={link} icon={icon} bgColor={color} textColor={textColor} />
+                    ))}
+                  </ProjectCard>
+
+                  {volunteers.length ? (
+                    <div class="volunteer">
+                      {volunteers.map(({ name, avatar, web, github, linkedIn }) => (
+                        <BubbleAvatar altText={name} imageSrc={avatar} webLink={web} linkedinLink={linkedIn} githubLink={github} />
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+            );
+          })
+        }
+      </div>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .projects-wrapper {
+    width: 110rem;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & .line {
+      width: 8px;
+      height: var(--height-line);
+      position: absolute;
+      background-color: var(--spring-green-color);
+      z-index: -1;
+      top: 20rem;
+    }
+
+    & .first-project {
+      max-width: 56.25rem;
+      margin: 3rem 0;
+    }
+
+    & .projects-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      margin: 8rem 0;
+      .right {
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        position: relative;
+        left: 37.8%;
+
+        .curve-right {
+          position: absolute;
+          z-index: -1;
+          left: 12%;
+          top: -30%;
+        }
+
+        .project-volunteers {
+          max-width: 600px;
+          position: relative;
+          right: 6%;
+          z-index: 1;
+
+          .volunteer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            gap: 8rem;
+            margin: 1rem 0;
+
+            z-index: -1;
+            position: absolute;
+            inset-block-inline: 0;
+
+            @media (width < 768px) {
+              position: relative;
+            }
+          }
+        }
+      }
+
+      .left {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        right: 37.75%;
+
+        .curve-left {
+          position: absolute;
+          z-index: -1;
+          right: 12%;
+          top: -30%;
+        }
+
+        .project-volunteers {
+          max-width: 600px;
+          position: relative;
+          left: 6%;
+
+          .volunteer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8rem;
+            margin: 1rem 0;
+          }
+        }
+      }
+    }
+
+    @media (width <= 768px) {
+      width: 100%;
+      margin: 0.5rem;
+
+      & .line {
+        height: calc(var(--height-line) * 2.1);
+      }
+
+      & .first-project {
+        margin: 1rem;
+      }
+
+      & .projects-container {
+        margin: 1rem;
+        .right {
+          left: 0;
+
+          .curve-right {
+            display: none;
+          }
+
+          .project-volunteers {
+            left: 0;
+            margin: 1rem;
+          }
+        }
+
+        .left {
+          right: 0;
+
+          .curve-left {
+            display: none;
+          }
+
+          .project-volunteers {
+            left: 0;
+            margin: 1rem;
+          }
+        }
+      }
+    }
+  }
+</style>

@@ -1,0 +1,109 @@
+---
+type Props = {
+  title: string;
+  desc: string;
+  photo: string;
+  className: string;
+};
+
+const { title, desc, photo, className } = Astro.props;
+---
+
+<div class={`card-wrapper ${className}`}>
+  <img src={`/assets/images/projects/${photo}`} alt={title} />
+  <div class="card-info">
+    <h3>{title}</h3>
+    <p>{desc}</p>
+    <div class="card-buttons">
+      <slot />
+    </div>
+  </div>
+</div>
+
+<style>
+  .card-wrapper {
+    border-radius: 1rem;
+    border: 2px solid var(--alt-text-color);
+    box-shadow: 4px 4px var(--spring-green-color);
+    padding: 1rem;
+
+    & .card-info {
+      color: var(--alt-text-color);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      gap: 1rem;
+
+      & h3 {
+        font-family: var(--main-font-family);
+        font-size: 1.75rem;
+        line-height: 1.2;
+        font-weight: 500;
+      }
+    }
+
+    & .card-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+  }
+
+  .project-principal {
+    max-height: 300px;
+    background-color: var(--lavender-rose-color);
+
+    display: flex;
+    gap: 1rem;
+
+    & img {
+      width: 100%;
+      object-fit: contain;
+      border-radius: 1rem;
+    }
+
+    @media (width <= 768) {
+      flex-direction: column;
+      max-height: none;
+    }
+  }
+
+  .project-secondary,
+  .project-tertiary {
+    display: flex;
+    flex: 1;
+    gap: 1rem;
+
+    & img {
+      width: 226px;
+      height: 273px;
+      border-radius: 1rem;
+      object-fit: cover;
+      object-position: 0%;
+    }
+
+    @media (width < 768px) {
+      flex-direction: column;
+
+      & img {
+        width: 100%;
+        height: 273px;
+        border-radius: 1rem;
+        object-fit: cover;
+        object-position: 0%;
+      }
+
+      .card-buttons {
+        justify-content: center;
+      }
+    }
+  }
+
+  .project-secondary {
+    background-color: var(--burning-orange-color);
+  }
+
+  .project-tertiary {
+    background-color: var(--saffron-color);
+  }
+</style>

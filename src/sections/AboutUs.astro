@@ -1,0 +1,128 @@
+<section id="sobre-nosotros">
+  <div class="container">
+    <header>
+      <h1>Sobre <span>Nosotros</span></h1>
+    </header>
+    <article>
+      <p>
+        UXCorpRangel es liderada por Ana Rangel, conocida en Twitch como UXAnaRangel. Ana es una streamer y experta en UX/UI con años de experiencia
+        en el campo. Su visión es crear una comunidad donde diseñadores y desarrolladores se unen para ganar experiencias y conocimientos mientras
+        crean proyectos increíbles. Crecemos juntos, aprendemos juntos y nos divertimos juntos.
+      </p>
+      <hr />
+      <blockquote>
+        <p class="quote">
+          "One of the things I've been pushing is code reading. I think that is the most useful thing that a community of programmers can do for each
+          other — spend time on a regular basis reading each other's code."
+        </p>
+        <p class="author">Douglas Crockford</p>
+      </blockquote>
+    </article>
+  </div>
+</section>
+
+<style>
+  section {
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--magic-mint-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--alt-text-color);
+
+    p,
+    p * {
+      cursor: text;
+    }
+
+    & .container {
+      width: min(80rem, 100vw);
+
+      @media (width < 1280px) {
+        width: 90%;
+      }
+
+      & header {
+        display: flex;
+        justify-content: center;
+
+        & h1 {
+          font-weight: 400;
+          font-size: 4.375rem;
+          margin-bottom: 4rem;
+          @media (width < 768px) {
+            text-align: center;
+          }
+
+          & span {
+            text-decoration: underline 0.25rem;
+          }
+        }
+      }
+
+      & article {
+        max-width: 70.563rem;
+        margin: 0 auto;
+
+        @media (width < 768px) {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        & p {
+          font-weight: 500;
+          margin-bottom: 2rem;
+          text-wrap: pretty;
+          font-size: 1.25rem;
+
+          @media (width < 768px) {
+            text-align: center;
+          }
+        }
+
+        & hr {
+          margin-bottom: 2rem;
+          border: 1px solid var(--alt-text-color);
+        }
+
+        & blockquote {
+          width: 90%;
+          display: flex;
+          text-align: center;
+          flex-direction: column;
+          align-items: center;
+
+          & .quote {
+            font-weight: 400;
+          }
+        }
+      }
+    }
+
+    @media (width < 768px) {
+      & .container {
+        margin: 4rem 0;
+        & header {
+          & h1 {
+            font-size: 2.188em;
+          }
+        }
+
+        & article {
+          & blockquote {
+            & .quote {
+              font-size: 1rem;
+            }
+
+            & .author {
+              font-size: 1rem;
+            }
+          }
+        }
+      }
+    }
+  }
+</style>
